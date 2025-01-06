@@ -1,0 +1,134 @@
+\documentclass[12pt]{article}
+\usepackage{array}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{amssymb} % For \checkmark
+\usepackage{booktabs} % For better table formatting
+
+\title{Applications Plan for Bug Databases}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Database List and Suitability}
+\begin{longtable}{|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
+\hline
+\textbf{Database} & \textbf{Bug Classification} & \textbf{Bug Localization} & \textbf{Bug Fixing} & \textbf{Test Case Generation} \\
+\hline
+\textbf{Bugzilla} & \checkmark & \checkmark & \checkmark & Limited (No test cases, use descriptions to infer) \\
+\hline
+\textbf{Defects4J} & Not Suitable & Partially Suitable (For localized datasets) & \checkmark & \checkmark (Includes failing/passing test cases) \\
+\hline
+\textbf{GitHub Issues} & \checkmark & Partially Suitable (Requires linking to code) & Partially Suitable (Limited fixes) & Limited (Test cases depend on repository availability) \\
+\hline
+\textbf{Apache Bugs} & \checkmark & \checkmark & \checkmark & Limited (Few test cases available) \\
+\hline
+\end{longtable}
+
+\section*{Applications Plan}
+
+\subsection*{Phase 1: Setup (Week 1--2)}
+\begin{itemize}
+    \item \textbf{Database Setup:}
+    \begin{itemize}
+        \item Collect datasets (e.g., Bugzilla API, Defects4J download, GitHub Issues scraping).
+        \item Preprocess data (clean text, align buggy/fixed pairs, organize metadata).
+    \end{itemize}
+    \item \textbf{Environment:}
+    \begin{itemize}
+        \item Set up modeling frameworks (e.g., Hugging Face Transformers, PyTorch).
+        \item Install necessary libraries for handling textual and code data.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Phase 2: Application Development (Weeks 3--10)}
+\textbf{A. Bug Classification (Weeks 3--4)}
+\begin{itemize}
+    \item Preprocess:
+    \begin{itemize}
+        \item Clean textual data from Bugzilla and GitHub Issues.
+        \item Map reports to severity or category labels.
+    \end{itemize}
+    \item Train:
+    \begin{itemize}
+        \item Fine-tune BERT or CodeBERT for text classification.
+    \end{itemize}
+    \item Evaluate:
+    \begin{itemize}
+        \item Use accuracy, F1-score, and confusion matrix.
+    \end{itemize}
+\end{itemize}
+
+\textbf{B. Bug Localization (Weeks 5--6)}
+\begin{itemize}
+    \item Preprocess:
+    \begin{itemize}
+        \item Map bug descriptions to code files/modules (Bugzilla, Apache Bugs).
+    \end{itemize}
+    \item Train:
+    \begin{itemize}
+        \item Combine textual data (description) with code embeddings (CodeBERT, Graph Neural Networks).
+    \end{itemize}
+    \item Evaluate:
+    \begin{itemize}
+        \item Measure precision and recall for pinpointing buggy locations.
+    \end{itemize}
+\end{itemize}
+
+\textbf{C. Bug Fixing (Weeks 7--8)}
+\begin{itemize}
+    \item Preprocess:
+    \begin{itemize}
+        \item Extract buggy/fixed code pairs (Defects4J).
+    \end{itemize}
+    \item Train:
+    \begin{itemize}
+        \item Use CodeT5 or Codex for sequence-to-sequence training.
+    \end{itemize}
+    \item Evaluate:
+    \begin{itemize}
+        \item Use BLEU score, patch correctness, and regression testing.
+    \end{itemize}
+\end{itemize}
+
+\textbf{D. Test Case Generation (Weeks 9--10)}
+\begin{itemize}
+    \item Preprocess:
+    \begin{itemize}
+        \item Use test cases in Defects4J to create training pairs.
+        \item Extract metadata (e.g., bug description + corresponding test cases).
+    \end{itemize}
+    \item Train:
+    \begin{itemize}
+        \item Fine-tune models like Codex to generate test cases.
+    \end{itemize}
+    \item Evaluate:
+    \begin{itemize}
+        \item Assess test coverage and fault detection rate.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Phase 3: Analysis and Iteration (Weeks 11--12)}
+\begin{itemize}
+    \item Compare results across datasets for each application.
+    \item Identify gaps and iterate on preprocessing or model architectures.
+\end{itemize}
+
+\subsection*{Phase 4: Reporting (Weeks 13--14)}
+\begin{itemize}
+    \item Prepare a research report or paper:
+    \begin{itemize}
+        \item Include findings, methodologies, and benchmarks.
+    \end{itemize}
+    \item Explore publication:
+    \begin{itemize}
+        \item Target software engineering journals or conferences like ICSE, ASE, or EMNLP.
+    \end{itemize}
+\end{itemize}
+
+\end{document}
