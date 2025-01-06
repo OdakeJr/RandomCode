@@ -1,0 +1,210 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{hyperref}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{enumitem}
+
+\title{Research Planning}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Overview}
+
+This document outlines a plan to manage research topics by dividing the project into sub areas. Each domain involves learning, practicing, proposing solutions, and documenting results. The main topics include:
+
+\begin{itemize}
+    \item \textbf{Job Scheduling and Prioritization:} Develop a mathematical model and use optimization techniques like combinatorial analysis, linear programming, and meta-heuristics to maximize resource utilization.
+
+    \item \textbf{Time Series Analysis:} Apply ARIMA models, LSTM, transformers, and clustering algorithms to predict trends and detect anomalies in time-dependent data.
+
+    \item \textbf{NLP and LLM Applications:} Address bug classification, localization, fixing, and test case generation using pre-trained models like T5, BERT, and GPT. Explore datasets such as Bugzilla and Defects4J, and create a pipeline for data preparation. If existing datasets prove insufficient, web scraping techniques will be employed to construct a database for evaluating the models.
+\end{itemize}
+
+\section*{General Goals}
+\begin{enumerate}
+    \item Develop algorithms for job scheduling to maximize delivered value given a finite resource.
+    \item Design predictive models and dashboards to provide stakeholders with interpretable information on the project's progress and potential issues.
+    \item Build NLP and LLM agents to automate bug classification, localization, fixing, and test case generation.
+    \item Publish articles based on the methodologies and findings.
+\end{enumerate}
+
+\section*{Methodology}
+
+The research is divided into three interconnected areas, each requiring different expertise. Developing a customized methodology for each ensures clarity and focus.
+
+\subsection*{1. Job Scheduling and Prioritization}
+
+\subsubsection*{Scope Definition}
+
+The objective is to prioritize and schedule tasks for each day based on their attributes, ensuring optimal resource allocation and project performance. Each task is associated with a project and may have dependencies or constraints that impact its execution. To achieve this, we formulate an optimization equation that maximizes system performance while adhering to specific constraints. The inputs to the model include:
+
+\begin{itemize} 
+\item \textbf{Value:} The importance or benefit derived from completing the task. \item \textbf{Duration:} The time required to complete the task. 
+\item \textbf{Team Capacity:} The available time or resources of the team to handle tasks. 
+\item \textbf{Dependencies and Constraints:} Task-specific rules and interdependencies that may influence task value or restrict scheduling options. These constraints limit the search space to ensure the feasibility of the schedule. \end{itemize}
+
+The complexity of the formulation depends significantly on the nature of the dependencies and constraints. To account for uncertainties introduced by dependencies, a probabilistic approach may be required. Using probability distributions to model these dependencies can help capture variability and provide a better optimization tool on real-world applications.
+
+\subsubsection*{Methods}
+
+\begin{itemize} 
+\item \textbf{Mathematical Formulation:} Develop an objective function to quantify system performance, ensuring it aligns with the scheduling goals. Additionally, define equations to represent the constraints and dependencies that the system must satisfy.
+\item \textbf{Dynamic Programming:} This method decomposes the scheduling problem into smaller subproblems and solves them recursively. Using a tabular approach ensures pseudo-polynomial time solutions for problems with small to medium-sized complexity.
+\item \textbf{Mixed Integer Linear Programming (MILP):} Designed for larger and more structured problems, this approach formulates scheduling as a mathematical optimization problem. 
+\begin{itemize}
+    \item \textbf{Objective Function:} Maximize the total job value.\vspace{-0.5em}
+    \item \textbf{Constraints:} Ensure jobs fit within the available team capacity and respect dependencies.
+    \item \textbf{Solvers:} PuLP or Gurobi can efficiently handle MILP formulations, providing optimal or near-optimal solutions.
+\end{itemize}
+\item \textbf{Meta-heuristic Algorithms:} Preferable for large-scale or highly complex problems where traditional methods may be computationally expensive. These algorithms explore the solution space heuristically to find near-optimal schedules. For example:
+\begin{itemize}
+    \item \textbf{Genetic Algorithms:} Mimic evolutionary processes to iteratively improve schedules.\vspace{-0.5em}
+    \item \textbf{Simulated Annealing:} Uses probabilistic techniques to escape local optima and converge toward a global solution.
+\end{itemize}
+\end{itemize}
+
+\subsubsection*{Potential Contributions}
+
+\begin{itemize} 
+
+\item \textbf{Performance Benchmarking:} Conduct a comparison of traditional methods (e.g., dynamic programming, linear programming) with meta-heuristic algorithms. Evaluate execution time, scalability, and effectiveness in maximizing value under varying constraints.
+
+\item \textbf{Multi-Objective Optimization:} Develop strategies to handle uncertainty caused by fluctuating requests, capacity, and dependencies. Propose methods to minimize risk while maximizing processed value, demonstrating robustness in unpredictable scenarios.
+
+\item \textbf{Forecasting Integration:} Utilize time series techniques (e.g., ARIMA, LSTM, transformers) to predict future inputs like job demand and team capacity. Integrate these forecasts into meta-heuristic algorithms to enhance their performance and evaluate extrapolation accuracy for large-scale systems. Establish upper and lower bounds for system performance under varying conditions.
+
+\item \textbf{Reinforcement Learning:} Explore reinforcement learning approaches to dynamically adapt the scheduling system to real-time changes. 
+
+\item \textbf{Industry-Specific Applications:} Address a scheduling challenge in a specific industry that has not been adequately solved. Highlight the practical importance and demonstrate how the proposed solution can improve operational efficiency.
+\end{itemize}
+
+\subsection*{2. Time Series Analysis}
+
+\textbf{TODO}
+
+\begin{itemize}
+    \item Use predictive techniques (e.g., ARIMA, LSTM, statistical analysis) to forecast issues and errors in projects.
+    \item Develop a dashboard to visualize predictions, resource requirements, and project progress for stakeholders.
+    \item Ensure the models are validated using real-world data.
+\end{itemize}
+
+\subsection*{3. NLP and LLM Applications}
+
+\subsubsection*{Scope Definition}
+
+This research area consists of three fronts, each addressing different challenges in software quality assurance using NLP and LLM:
+
+\textbf{User Feedback and Log Analysis:} The first front focuses on analyzing user-reported problems and software logs. This task does not require direct interaction with the source code but involves understanding and interpreting user feedback and log data. The goals are to:
+
+\begin{itemize}
+    \item Classify the criticality of the reported issue.
+    \item Identify the likely functionality or module affected by the problem.
+    \item Provide a step-by-step guide to reproduce the error.
+\end{itemize}
+
+\textbf{Bug Detection and Fixing:} The second front involves working directly with potentially problematic code. The objectives are to:
+
+\begin{itemize}
+    \item Classify the severity of issues in the code.
+    \item Point to the specific location of the problem within the code.
+    \item Automatically generate a fixed version of the problematic code.
+\end{itemize}
+
+\textbf{Automated Test Case Generation:} The third front aims to generate test cases for the software automatically. The system would:
+
+\begin{itemize}
+    \item Accept source code as input and create corresponding test cases.
+    \item Incorporate requirements and contextual inputs to guide the generative process.
+\end{itemize}
+
+To achieve these objectives, we must explore state-of-the-art NLP and LLM techniques and identify appropriate datasets for each problem.
+
+\subsubsection*{Methods}
+
+To address the challenges outlined in the scope, we propose the following methods for each front:
+
+\textbf{User Feedback and Log Analysis:} 
+\begin{itemize} 
+    \item \textbf{Text Classification:} Use pre-trained language models (e.g., BERT, RoBERTa) fine-tuned on datasets of user feedback and software logs to classify the criticality of issues. Incorporate log patterns to improve accuracy.
+    \item \textbf{Named Entity Recognition (NER):} Employ NER models to extract relevant entities from feedback and logs, such as functionality names, error types, or log identifiers, to identify the affected module or system component.
+    \item \textbf{Text Summarization:} Implement extractive or abstractive summarization models to generate step-by-step instructions for reproducing errors, leveraging both user descriptions and insights from log data.
+    \item \textbf{Datasets:} Collect feedback and log data from internal systems or public repositories (e.g., GitHub Issues, Bugzilla) to create labeled datasets tailored for classification, entity recognition, and summarization tasks.
+\end{itemize}
+
+\textbf{Bug Detection and Fixing:} 
+\begin{itemize} 
+\item \textbf{Code Classification:} Fine-tune code-specific models (e.g., CodeBERT, CodeT5) to classify the severity of issues in source code. 
+\item \textbf{Bug Localization:} Use attention-based LLMs to predict the location of bugs within code files by analyzing patterns in syntax and semantics. 
+\item \textbf{Automatic Code Repair:} Train sequence-to-sequence models like CodeT5 or use GPT-based models to generate corrected versions of buggy code. Combine this with static code analysis tools for validation. 
+\item \textbf{Datasets:} Utilize bug-fix datasets such as Defects4J, ManyBugs, and public GitHub repositories with annotated commits for training and evaluation. \end{itemize}
+
+\textbf{Automated Test Case Generation:} (AgentCoder: Multi-Agent Code Generation with Effective Testing and Self-optimisation)
+\begin{itemize} 
+\item \textbf{Code-to-Test Generation:} Use models like Codex or CodeT5 to generate test cases from source code. Fine-tune these models with datasets containing code and corresponding tests (e.g., from Defects4J). 
+\item \textbf{Context Incorporation:} Extend input prompts with additional context such as software requirements or design specifications to guide the generation process. 
+\item \textbf{Test Evaluation:} Measure the quality of generated test cases using metrics like code coverage, fault detection rate, and maintainability. 
+\item \textbf{Datasets:} Extract data from open-source projects with well-documented tests or use synthetic datasets for bootstrapping. 
+\end{itemize}
+
+\textbf{Common Techniques and Tools:}
+\begin{itemize} 
+\item \textbf{Transfer Learning:} Leverage pre-trained language models like T5, GPT, and BERT for downstream tasks. 
+\item \textbf{Prompt Engineering:} Design prompts to maximize the performance of generative models like GPT for specific tasks. 
+\item \textbf{Evaluation Metrics:} Use domain-specific metrics for classification (e.g., F1-score), generation (e.g., BLEU score), and test case evaluation (e.g., code coverage). 
+\end{itemize}
+
+\subsubsection*{Potential Contributions}
+
+
+
+\begin{itemize}
+    \item Implement NLP and LLM-based tools for bug classification, localization, fixing, and test case generation.
+    \item Use datasets like Bugzilla and Defects4J to train and validate models such as BERT, CodeBERT, and CodeT5.
+    \item Evaluate the models using metrics such as accuracy, BLEU score, and coverage improvement.
+\end{itemize}
+
+\section*{Timeline (First Year)}
+\begin{enumerate}
+    \item \textbf{Months 1--2: Foundation}
+    \begin{itemize}
+        \item Literature review and learning relevant techniques (e.g., optimization, NLP, predictive modeling).
+        \item Collect and preprocess historical data for job scheduling and prediction modules.
+    \end{itemize}
+    \item \textbf{Months 3--4: Development of Job Scheduling Module}
+    \begin{itemize}
+        \item Implement and test initial algorithms (e.g., dynamic programming, linear programming).
+        \item Begin developing genetic algorithms for larger datasets.
+    \end{itemize}
+    \item \textbf{Months 5--6: Integration and Validation of Job Scheduling Module}
+    \begin{itemize}
+        \item Integrate predictive models for future job and capacity forecasting.
+        \item Validate the scheduling algorithms using real-world data.
+        \item Prepare a publication based on findings.
+    \end{itemize}
+    \item \textbf{Months 7--8: Development of Project Issue Prediction Module}
+    \begin{itemize}
+        \item Implement initial predictive models (e.g., ARIMA, LSTM) and validate on historical data.
+        \item Design a prototype dashboard for stakeholder visualization.
+    \end{itemize}
+    \item \textbf{Months 9--12: NLP and LLM Module Foundations}
+    \begin{itemize}
+        \item Begin foundational learning in NLP and LLM techniques.
+        \item Preprocess datasets like Bugzilla and Defects4J.
+        \item Prototype initial models for bug classification and localization.
+    \end{itemize}
+\end{enumerate}
+
+\section*{Next Steps}
+\begin{itemize}
+    \item Begin literature review and data collection for job scheduling.
+    \item Set up development environment and prototype algorithms for initial testing.
+    \item Plan detailed steps for subsequent modules based on progress.
+\end{itemize}
+
+\end{document}
