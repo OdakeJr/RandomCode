@@ -1,0 +1,107 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{hyperref}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{enumitem}
+
+\title{Optimization}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introduction}
+
+The evolution of software development has brought challenges to project management, resource allocation, and quality assurance. In the early days, software was often delivered as a single version that remained unchanged for years. Hardware was less diversified, and software systems were independent, with minimal integrations or updates. However, as technology advanced, software complexity grew exponentially, necessitating more features, frequent updates, and extensive integrations with third-party systems such as APIs and cloud services.
+
+These changes have made project management and scheduling techniques indispensable. Today, large companies must navigate an ever-growing volume of software releases, ranging from patches to address critical security vulnerabilities to updates aimed at improving performance or adding new features. Each release plays a role in maintaining software quality, minimizing customer impact, and ensuring satisfaction. This mirrors challenges faced in manufacturing industries, where job scheduling techniques are widely applied to optimize resource use and minimize costs. Similarly, the increasingly fragmented and complex nature of software development calls for advanced scheduling strategies. 
+
+Job scheduling, when applied to software management, can help estimate how much resources we need to help new features get to the final user when promised, or prioritize the tasks to give the least amount of impact on the final user. The job scheduling problem (JSP) has been extensively studied, yet its complexity continues to present challenges in real-world applications. Factors such as varying deadlines, conflicting priorities, or different objective paradigmas necessitate tailored solutions for different scenarios. For example, some projects must be expedited to meet urgent business goals, while others require precise timing to avoid premature or late completion. Addressing this diversity requires different mathematical models that can adapt to multiple objectives and constraints, ensuring an optimal balance between competing priorities.
+
+Despite extensive research on job scheduling optimization, most mathematical models are tailored to specific objectives, such as minimizing lateness, reducing makespan, or ensuring just-in-time completion. This narrow focus limits their applicability across diverse scenarios where multiple objectives or dynamic priorities coexist. Additionally, many existing formulations require substantial modification or entirely separate models to accommodate different goals, making them inflexible for real-world use cases where priorities can shift rapidly. There is a clear gap in the literature for a unified and adaptable scheduling model that can address varying objectives by simply adjusting parameters, enabling seamless customization for scenarios like just-in-time scheduling, minimizing lateness, or balancing resource utilization without the need for model redefinition.
+
+The literature shows a clear challenge of taking a specific problem and defining a mathematical formulation based on expertise. These problems calls for a unified and adaptable scheduling model that can address varying objectives by simply adjusting parameters, enabling seamless customization for scenarios like just-in-time scheduling, minimizing lateness, or balancing resource utilization without the need for model redefinition.
+
+This research proposes a customized approach to optimize the software validation process scheduling by using a Mixed Integer Linear Programming (MILP) model with hyperparameters that simulate the behavior of multiple scheduling objectives within a single formulation. The model achieves adaptability by parameterizing the item aspects such as deadlines, penalties for lateness or earliness, and resource constraints, allowing practitioners to prioritize different objectives without altering the core structure. 
+
+This paradigm of modifying the items instead of modifying the mathematical model can provide companies the possibility to apply optimization algorithms on their processes (either software management, manufacturing, or any other field) without the need of an expert dedicated to model the problem from zero. This flexibility not only reduces the complexity of deploying scheduling optimization across varying scenarios but also enhances its practical relevance, particularly in dynamic environments where we need to account different objectives and constraints. 
+
+We also introduce a way to understand if we have enough resources to achieve our results on time, this idea can provide insightful information for stakeholds to understand if more investments are needed or if we could increase the demands.
+
+\section*{Related Works}
+
+Put more author's names
+
+Heuristic solutions were proposed deal with scheduling jobs, like priority rules, Schedule generation scheme, Forward‐backward scheduling and Justification schemes. These methods requires low computational power, so they are powerful tools for large scale problems, however it does not guarantee optimal solution. For example, priority rules are a set a predefined rules that guide the scheduling process, it does fully explore the search space. So these methods are not recommended for critical problems when we need to actually achieve the optimal solution.
+
+When we want to get an approximately optimal solution meta-heuristic algorithms are another approach. These algorithms are usually inspired in natural fenomenon that have computational intelligence. They often use iterations to evolute and get near the optimal solution. They still don't guarantee the optimal solution, but can often get better results than simple heuristic solutions and are still less computationally costly when it comes to exact algorithms, so they can still be explored in medium to large scale problems. A few examples are genetic algorithms, simulated anneling, and taboo search.
+
+Heuristic solutions are more obvious solutions, it can be similar to a greedy approach, where we just place the most valuable or with the closest deadline first, and keep iterating until we place all the items. It is very predictable. On the other hand, genetic algorithms can come up with solutions that are not easy to interpret why that decision was made, the only thing we know is that it was the solution that gave the minimum (or maximum) reward on the objective function.
+
+Another approach is to define a mathematical formulation containing an objective function, a set of constraints, and treat it as a mathematical optimization using mixed integer linear programming (MILP). This method uses a relaxation on the discrete problem, use linear programming to solve the set of equations and then do a branch and cut approach to check if it is the optimal equation or not. Differently from previous methods, MILP provides the exact optimal solution, so it have a vision of the whole situation and peak the best scheduling given the information received. Job scheduling is a NP-hard problem, so finding the optimal solution, may take exponential time in the worst case. MILP method takes on average less time to find the optimal solution, since it uses branch and cut approach. Nevertheless, this method may be infeasible in so practical large scale situations.
+
+The algorithms talked earlier are used for optimization, however we still need to provide a mathematical formulation for the problem. Jacek Blazewicz provides a survey of the several mathematical programming formulations used in the context of scheduling optimization. 
+
+Jackson proposes a formulation for minimizing the maximal lateness on a single
+machine. Bruno et al. proposed a generalization of the shortest processing time (SPT) rule by adding weights to each job and try to minimize the completion time. Gabriel Zambrano Rey proposed a formulation to address the just-in-time paradigm, he used a mean squared error around the due date, so the objective function penalize both late items and items that world too early, given the complexity of the problem he used GA and PSO to get a near-optimal solution. However, each technique is tailored for an specific situation, if we want to change the behavior of the scheduling or even provide a mixed interpretation for different jobs, we would need to propose or model another formulation.
+
+Several other studies [7, 8] proposes novel formulations for the scheduling problem. However, their focus is mostly for improving the performance. For example, Anbang Liu proposed a formulation with fewer decision variables, reducing the complexity of the final decision. However, we still  don't have a more unified formulation capable of handling a more diverse scenario depending only on the items properties
+
+\section*{Methodology}
+
+
+
+\section*{Results}
+
+
+
+\section*{Discussion}
+
+Inter dependencies - MINLP
+
+Uncertainty and fuzzy behavior
+
+Metaheuristics for large scales - NP-hard
+
+\section*{References}
+
+1 - Optimization Algorithms in Project Scheduling
+
+2 - Mathematical programming formulations for machine scheduling: A survey
+
+3 - Scheduling a production line to minimize maximum tardiness
+
+4 - Padberg, M.W., and Grotschel, M. (1985), "Polyhedral computations" in : E.L.Lawler, J.K. Lenstra, A.H .G. Rinnooy Kan and D. Shmoys (eds.), The Travelling Salesman Problem,Wiley,Chichester, 307-360.
+
+5 - Scheduling independent tasks to reduce mean finishing time 
+
+6 - Solving the flexible job-shop just-in-time scheduling problem
+with quadratic earliness and tardiness costs Gabriel Zambrano Rey
+
+7 - A Novel Integer Linear Programming Formulation for Job-Shop
+Scheduling Problems
+
+8 - An Innovative Formulation Tightening Approach for Job-Shop
+Scheduling
+
+\section*{Old}
+
+When software was not much present in our lives, companies often released one version that would stay static for perhaps years, and it did not have much changes, and the hardware was not so diversified. But the diversity has being magnified a lot. So large companies often have to work if an increasing big amount of software releases, changes, and so on.
+
+In the old days, software development management was very poor, since the software was much less complex, with less functionalities, and usually independent with no integration with third part systems. However, the size of the software is increasing, more features are required and there may be hundreds of integration with APIs, cloud services and etc. In the really early days we could get a description of what the client wanted and provide it to them. But as the computers became more functional, the software became increasingly more complex. 
+
+Project management became evidently necessary, and we started breaking the software in several feature, and tasks that must be completed to get the final product. This way we could deliver small functional functionalities to the client. And with this idea, was born the agile methodologies. 
+
+Job scheduling is often used in manufacturing industries to garanteeing the best use of resources and minimizing production costs. As the software development world is becoming more fragmented and complex, job scheduling techniques are strong methods that can improve the resource utilization, project outcomes and customer satisfaction. As organizations face increasing demands for timely and cost-effective delivery, developing adaptable scheduling methodologies becomes essential.
+
+The job scheduling problem (JSP) has been extensively studied, yet its complexity continues to present challenges in real-world applications. Factors such as varying deadlines, conflicting priorities, or different objective paradgmas necessitate tailored solutions for different scenarios. For example, some projects must be expedited to meet urgent business goals, while others require precise timing to avoid premature or late completion. Addressing this diversity requires different mathematical models that can adapt to multiple objectives and constraints, ensuring an optimal balance between competing priorities.
+
+Despite extensive research on job scheduling optimization, most mathematical models are tailored to specific objectives, such as minimizing lateness, reducing makespan, or ensuring just-in-time completion. This narrow focus limits their applicability across diverse scenarios where multiple objectives or dynamic priorities coexist. This model also requires someone with a deep understanding of the process and optimization methods, which creates a difficulty to implement scheduling techniques without a lot of time preparing someone. Additionally, many existing formulations require substantial modification or entirely separate models to accommodate different goals, making them inflexible for real-world use cases where priorities can shift rapidly. 
+
+This research addresses the aforementioned gap by proposing a versatile Mixed Integer Linear Programming (MILP) model that integrates multiple scheduling objectives within a single formulation. The model achieves adaptability by parameterizing key aspects such as deadlines, penalties for lateness or earliness, and resource constraints, allowing practitioners to prioritize different objectives without altering the core structure. This flexibility not only reduces the complexity of deploying scheduling optimization across varying scenarios but also enhances its practical relevance, particularly in dynamic environments like software development and project management. By enabling seamless customization of objectives within a unified framework, this work provides a significant step toward bridging theoretical advancements with practical applications in job scheduling.
+
+\end{document}
