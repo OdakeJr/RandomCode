@@ -1,0 +1,452 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+
+\begin{document}
+
+\title{Frequentist and Bayesian Approaches to Categorical Probability Estimation}
+\author{Edson Odake}
+\date{\today}
+\maketitle
+
+\section{Problem Statement}
+We have a dataset with three categorical variables \( A, B, C \) and a binary status variable \( S \), where \( S \in \{ \text{True}, \text{False} \} \). The categorical variables can take multiple values:
+
+\[
+A \in \{ A_1, A_2, A_3, \dots \}, \quad B \in \{ B_1, B_2, B_3, \dots \}, \quad C \in \{ C_1, C_2, C_3, \dots \}
+\]
+
+Given a new sample with values \( A_i, B_j, C_k \), we want to estimate:
+
+\[
+P(S = \text{True} | A_i, B_j, C_k)
+\]
+
+We explore different approaches: frequentist probability estimation, logistic regression, Bayesian methods, and machine learning techniques.
+
+\section{1. Empirical Probability Estimation (Frequentist Approach)}
+A simple frequentist method estimates probability using the frequency of occurrences:
+
+\[
+P(S = \text{True} | A_i, B_j, C_k) = \frac{\text{count of True cases for } (A_i, B_j, C_k)}{\text{total cases for } (A_i, B_j, C_k)}
+\]
+
+\subsection{Example Calculation}
+Suppose we have the following dataset:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ccc|cc}
+        \toprule
+        A  & B  & C  & \text{True Count} & \text{Total Count} \\
+        \midrule
+        A_1 & B_1 & C_1 & 30  & 50  \\
+        A_1 & B_1 & C_2 & 10  & 20  \\
+        A_2 & B_2 & C_1 & 5   & 15  \\
+        \bottomrule
+    \end{tabular}
+    \caption{Example Data for Probability Estimation}
+\end{table}
+
+Then, for \( A_1, B_1, C_1 \):
+
+\[
+P(S = \text{True} | A_1, B_1, C_1) = \frac{30}{50} = 0.6
+\]
+
+\textbf{Pros and Cons:}
+\begin{itemize}
+    \item \textbf{Pros:} Simple and interpretable.
+    \item \textbf{Cons:} If some combinations are rare, probability estimates become unreliable.
+\end{itemize}
+
+\section{2. Logistic Regression Approach}
+Logistic regression models the probability using a function:
+
+\[
+P(S = \text{True} | A, B, C) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 A + \beta_2 B + \beta_3 C)}}
+\]
+
+where:
+\begin{itemize}
+    \item \( A, B, C \) are represented as dummy (one-hot encoded) variables,
+    \item \( \beta_0, \beta_1, \beta_2, \beta_3 \) are parameters estimated from data.
+\end{itemize}
+
+\textbf{Steps to Implement:}
+\begin{enumerate}
+    \item Convert categorical variables into one-hot encoding.
+    \item Fit a logistic regression model using maximum likelihood estimation.
+    \item Use the model to predict probabilities.
+\end{enumerate}
+
+\textbf{Pros and Cons:}
+\begin{itemize}
+    \item \textbf{Pros:} Handles missing combinations well, interpretable.
+    \item \textbf{Cons:} Assumes a linear relationship in log-odds space.
+\end{itemize}
+
+\section{3. Bayesian Approach: Naïve Bayes}
+Using Bayes' theorem:
+
+\[
+P(S = \text{True} | A, B, C) \propto P(A | S = \text{True}) P(B | S = \text{True}) P(C | S = \text{True}) P(S = \text{True})
+\]
+
+where:
+
+\[
+P(A_i | S = \text{True}) = \frac{\text{count of True cases with } A_i}{\text{total True cases}}
+\]
+
+This method assumes independence between \( A, B, C \), which may not always be valid.
+
+\subsection{Example Calculation}
+If:
+
+\[
+P(A_1 | S = \text{True}) = 0.6, \quad P(B_1 | S = \text{True}) = 0.7, \quad P(C_1 | S = \text{True}) = 0.5
+\]
+
+then:
+
+\[
+P(S = \text{True} | A_1, B_1, C_1) \propto 0.6 \times 0.7 \times 0.5 \times P(S = \text{True})
+\]
+
+\textbf{Pros and Cons:}
+\begin{itemize}
+    \item \textbf{Pros:} Fast and effective for large datasets.
+    \item \textbf{Cons:} Assumes independence of variables.
+\end{itemize}
+
+\section{4. Machine Learning Approaches}
+For complex datasets, we can use:
+\begin{itemize}
+    \item \textbf{Decision Trees}: Learn decision rules to estimate \( P(S = \text{True}) \).
+    \item \textbf{Random Forests}: An ensemble method improving robustness.
+    \item \textbf{Neural Networks}: Useful for nonlinear relationships.
+\end{itemize}
+
+\textbf{Pros and Cons:}
+\begin{itemize}
+    \item \textbf{Pros:} Handles complex relationships.
+    \item \textbf{Cons:} Requires more data and computational resources.
+\end{itemize}
+
+\section{Comparison of Methods}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{l|l}
+        \toprule
+        Approach & Best Used When \\
+        \midrule
+        Empirical Probability & Large dataset, simple probability estimation \\
+        Logistic Regression & Need for interpretability and robust estimation \\
+        Naïve Bayes & Bayesian reasoning, fast probability updates \\
+        Machine Learning & Complex patterns in data \\
+        \bottomrule
+    \end{tabular}
+    \caption{Comparison of Methods}
+\end{table}
+
+\section{Conclusion}
+\begin{itemize}
+    \item \textbf{Use empirical probability} if the dataset is large and well-distributed.
+    \item \textbf{Use logistic regression} if interpretability is important.
+    \item \textbf{Use Bayesian Naïve Bayes} for a probabilistic approach with priors.
+    \item \textbf{Use machine learning} if patterns are complex.
+\end{itemize}
+
+
+
+
+
+
+\section{Introduction}
+We consider the problem of estimating the probability of a binary status variable \( S \in \{\text{True}, \text{False}\} \) given three categorical variables \( A, B, C \). The goal is to determine which method provides the most reliable probability estimates.
+
+\section{1. Empirical Probability Estimation (Frequentist Approach)}
+A simple frequentist approach estimates probability using observed frequencies:
+
+\[
+P(S = \text{True} | A_i, B_j, C_k) = \frac{\text{count of True cases for } (A_i, B_j, C_k)}{\text{total cases for } (A_i, B_j, C_k)}
+\]
+
+\subsection{Faithfulness and Interpretability}
+\begin{itemize}
+    \item \textbf{Faithfulness:}  (High, if enough data is available).
+    \item \textbf{Interpretability:}  (Easy to understand).
+    \item \textbf{Weakness:} If some category combinations are rare, estimates may be unreliable.
+\end{itemize}
+
+\section{2. Logistic Regression}
+Logistic regression models the probability using the sigmoid function:
+
+\[
+P(S = \text{True} | A, B, C) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 A + \beta_2 B + \beta_3 C)}}
+\]
+
+where:
+\begin{itemize}
+    \item \( A, B, C \) are one-hot encoded categorical variables.
+    \item \( \beta_0, \beta_1, \beta_2, \beta_3 \) are parameters estimated via maximum likelihood.
+\end{itemize}
+
+\subsection{Faithfulness and Interpretability}
+\begin{itemize}
+    \item \textbf{Faithfulness:}  (Well-calibrated if assumptions hold).
+    \item \textbf{Interpretability:}  (Coefficients show variable influence).
+    \item \textbf{Weakness:} Assumes a log-odds relationship, which may not always hold.
+\end{itemize}
+
+\section{3. Naïve Bayes}
+Using Bayes' theorem:
+
+\[
+P(S = \text{True} | A, B, C) \propto P(A | S = \text{True}) P(B | S = \text{True}) P(C | S = \text{True}) P(S = \text{True})
+\]
+
+This assumes independence between \( A, B, C \), which simplifies calculations.
+
+\subsection{Faithfulness and Interpretability}
+\begin{itemize}
+    \item \textbf{Faithfulness:}  (Only valid if independence holds; otherwise, miscalibrated).
+    \item \textbf{Interpretability:}  (Easy to understand probabilities).
+    \item \textbf{Weakness:} Assumption of independence can be unrealistic.
+\end{itemize}
+
+\section{4. Decision Trees}
+Decision trees estimate probability using:
+
+\[
+P(S = \text{True} | A, B, C) = \frac{\text{Number of True samples in the leaf}}{\text{Total samples in the leaf}}
+\]
+
+\subsection{Faithfulness and Interpretability}
+\begin{itemize}
+    \item \textbf{Faithfulness:}  (Probabilities are often overconfident).
+    \item \textbf{Interpretability:}  (Easy to follow decision paths).
+    \item \textbf{Weakness:} Stepwise probability estimates may not generalize well.
+\end{itemize}
+
+\section{5. Random Forests}
+Random forests improve upon decision trees by averaging probabilities over multiple trees.
+
+\subsection{Faithfulness and Interpretability}
+\begin{itemize}
+    \item \textbf{Faithfulness:}  (Better than individual trees but can still be miscalibrated).
+    \item \textbf{Interpretability:}  (Less interpretable than decision trees).
+    \item \textbf{Weakness:} May still need probability calibration.
+\end{itemize}
+
+\section{6. Neural Networks}
+Neural networks use the softmax function (for multiple categories) or sigmoid (for binary classification):
+
+\[
+P(S = \text{True} | A, B, C) = \frac{1}{1 + e^{-f(A, B, C)}}
+\]
+
+\subsection{Faithfulness and Interpretability}
+\begin{itemize}
+    \item \textbf{Faithfulness:}  (Often needs calibration for probability correctness).
+    \item \textbf{Interpretability:}  (Black-box nature).
+    \item \textbf{Weakness:} Requires large amounts of data and careful tuning.
+\end{itemize}
+
+\section{7. Comparison of Methods}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{l|c|c}
+        \toprule
+        \textbf{Model} & \textbf{Faithfulness of Probability} & \textbf{Interpretability} \\
+        \midrule
+        Empirical Probability (Frequentist Counting) & (if enough data) & (High) \\
+        Logistic Regression & (Well-calibrated) & (High) \\
+        Naïve Bayes & (Misleading if independence does not hold) & (Moderate) \\
+        Decision Trees & (Overconfident) & (High) \\
+        Random Forests & (Needs calibration) & (Moderate) \\
+        Neural Networks & (Often miscalibrated) & (Black-box) \\
+        \bottomrule
+    \end{tabular}
+    \caption{Comparison of Methods for Probability Estimation}
+\end{table}
+
+\section{8. Best Model for Probability Estimation}
+\begin{itemize}
+    \item \textbf{Best for reliable probabilities:} Logistic Regression.
+    \item \textbf{Best for simple lookup estimates:} Empirical Probability.
+    \item \textbf{Best for Bayesian reasoning:} Naïve Bayes.
+    \item \textbf{Best for complex cases:} Random Forests (with probability calibration).
+    \item \textbf{Best for accuracy (not interpretability):} Neural Networks with temperature scaling.
+\end{itemize}
+
+\section{9. Probability Calibration Methods}
+For models that tend to be miscalibrated (decision trees, random forests, neural networks), probability calibration techniques like **Platt Scaling** and **Isotonic Regression** can be applied:
+
+\begin{itemize}
+    \item \textbf{Platt Scaling:} Fits a logistic regression model on predicted probabilities.
+    \item \textbf{Isotonic Regression:} Uses a non-parametric method to adjust probabilities.
+    \item \textbf{Temperature Scaling:} Commonly used for neural networks to adjust confidence levels.
+\end{itemize}
+
+\section{Conclusion}
+Different models provide different levels of probability reliability and interpretability. **Logistic Regression** and **empirical probability counting** provide the most faithful and interpretable probability estimates. For complex datasets, **random forests with probability calibration** offer a practical alternative.
+
+
+
+
+\section{Problem Statement}
+We have three continuous input variables \( X_1, X_2, X_3 \) and a binary classification target \( S \), where:
+
+\[
+S \in \{\text{True}, \text{False}\}
+\]
+
+Our goal is to estimate the probability:
+
+\[
+P(S = \text{True} | X_1, X_2, X_3)
+\]
+
+using the \textbf{Naïve Bayes} approach, assuming that \( X_1, X_2, X_3 \) are conditionally independent given \( S \).
+
+\section{1. Bayes' Theorem}
+Using Bayes' theorem:
+
+\[
+P(S = \text{True} | X_1, X_2, X_3) = \frac{P(X_1, X_2, X_3 | S = \text{True}) P(S = \text{True})}{P(X_1, X_2, X_3)}
+\]
+
+Since Naïve Bayes assumes that \( X_1, X_2, X_3 \) are independent given \( S \), we can decompose:
+
+\[
+P(X_1, X_2, X_3 | S) = P(X_1 | S) P(X_2 | S) P(X_3 | S)
+\]
+
+This simplifies our probability calculation.
+
+\section{2. Gaussian Likelihood Model}
+Each feature \( X_i \) is modeled using a Gaussian (Normal) distribution:
+
+\[
+P(X_i | S) = \frac{1}{\sqrt{2 \pi \sigma_i^2}} \exp\left(-\frac{(X_i - \mu_i)^2}{2 \sigma_i^2} \right)
+\]
+
+where:
+\begin{itemize}
+    \item \( \mu_i \) is the mean of \( X_i \) for class \( S \).
+    \item \( \sigma_i^2 \) is the variance of \( X_i \) for class \( S \).
+\end{itemize}
+
+\section{3. Steps for Estimation}
+\subsection{Step 1: Compute Class Priors}
+The prior probability for \( S = \text{True} \) is estimated as:
+
+\[
+P(S = \text{True}) = \frac{\text{count of True cases}}{\text{total cases}}
+\]
+
+Similarly, for \( S = \text{False} \):
+
+\[
+P(S = \text{False}) = \frac{\text{count of False cases}}{\text{total cases}}
+\]
+
+\subsection{Step 2: Estimate Mean and Variance}
+For each feature \( X_i \), compute the mean and variance separately for \( S = \text{True} \) and \( S = \text{False} \).
+
+For \( S = \text{True} \):
+
+\[
+\mu_i^{\text{True}} = \frac{1}{N_{\text{True}}} \sum_{j \in \{S = \text{True}\}} X_{ij}
+\]
+
+\[
+\sigma_i^{\text{True}} = \frac{1}{N_{\text{True}}} \sum_{j \in \{S = \text{True}\}} (X_{ij} - \mu_i^{\text{True}})^2
+\]
+
+Similarly, for \( S = \text{False} \):
+
+\[
+\mu_i^{\text{False}} = \frac{1}{N_{\text{False}}} \sum_{j \in \{S = \text{False}\}} X_{ij}
+\]
+
+\[
+\sigma_i^{\text{False}} = \frac{1}{N_{\text{False}}} \sum_{j \in \{S = \text{False}\}} (X_{ij} - \mu_i^{\text{False}})^2
+\]
+
+\subsection{Step 3: Compute Conditional Probabilities}
+For a new observation \( (X_1, X_2, X_3) \), calculate:
+
+\[
+P(X_1, X_2, X_3 | S = \text{True}) = P(X_1 | S = \text{True}) P(X_2 | S = \text{True}) P(X_3 | S = \text{True})
+\]
+
+and similarly for \( S = \text{False} \).
+
+\subsection{Step 4: Apply Bayes' Rule}
+Compute the posterior probability:
+
+\[
+P(S = \text{True} | X_1, X_2, X_3) = \frac{P(X_1, X_2, X_3 | S = \text{True}) P(S = \text{True})}{P(X_1, X_2, X_3)}
+\]
+
+Since we are performing classification, we can take the maximum:
+
+\[
+\hat{S} = \arg\max_{S} P(S) \prod_{i=1}^{3} P(X_i | S)
+\]
+
+\section{4. Example Calculation}
+Assume the following statistics:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|cc}
+        \toprule
+        Feature & \( \mu^{\text{True}} \) & \( \sigma^{\text{True}} \) \\
+        \midrule
+        \( X_1 \) & 5.0 & 1.0 \\
+        \( X_2 \) & 10.0 & 2.0 \\
+        \( X_3 \) & 3.0 & 0.5 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Mean and Variance for \( S = \text{True} \)}
+\end{table}
+
+For a new sample \( (X_1 = 5.5, X_2 = 9.5, X_3 = 3.1) \):
+
+\[
+P(X_1 | S = \text{True}) = \frac{1}{\sqrt{2 \pi (1.0)^2}} e^{-\frac{(5.5 - 5.0)^2}{2 (1.0)^2}}
+\]
+
+\[
+P(X_2 | S = \text{True}) = \frac{1}{\sqrt{2 \pi (2.0)^2}} e^{-\frac{(9.5 - 10.0)^2}{2 (2.0)^2}}
+\]
+
+\[
+P(X_3 | S = \text{True}) = \frac{1}{\sqrt{2 \pi (0.5)^2}} e^{-\frac{(3.1 - 3.0)^2}{2 (0.5)^2}}
+\]
+
+The final probability is computed using Bayes' rule.
+
+\section{5. Pros and Cons}
+\subsection{Pros}
+\begin{itemize}
+    \item Computationally efficient.
+    \item Works well if features are approximately Gaussian.
+\end{itemize}
+
+\subsection{Cons}
+\begin{itemize}
+    \item Assumes independence of features, which may not always hold.
+    \item Fails if features are not normally distributed (can be improved using Gaussian Mixture Models).
+\end{itemize}
+
+\section{6. Conclusion}
+The Naïve Bayes classifier with Gaussian likelihood is a simple yet effective method for continuous data. However, its assumption of independence can be limiting. If features are not Gaussian, more flexible approaches such as Gaussian Mixture Models or Bayesian Networks can be used.
+
+
+\end{document}
