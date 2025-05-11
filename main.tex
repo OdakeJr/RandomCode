@@ -1,0 +1,114 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Benchmarking Time Series Forecasting Models: Classical vs Deep Learning Approaches}
+\author{Your Name\\Your Institution}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper benchmarks classical forecasting models (ARIMA, SARIMA, Holt-Winters, Prophet, DLM) against deep learning models (RNN, LSTM, GRU, TCN) across multiple diverse datasets. We compare accuracy, computational efficiency, and robustness, providing recommendations for practitioners in choosing suitable forecasting techniques.
+\end{abstract}
+
+\section{Introduction}
+Forecasting is crucial across domains, from finance to healthcare. Although traditional methods like ARIMA have long been standard, recent advances in deep learning promise improved accuracy. This paper systematically benchmarks both classical and deep learning methods.
+
+\section{Methodology}
+We evaluate models using Mean Absolute Error (MAE), Root Mean Squared Error (RMSE), Mean Absolute Percentage Error (MAPE), and computational training time. We selected datasets representing different characteristics (AirPassengers, Sunspots, Electricity).
+
+\subsection{Models Evaluated}
+We considered two main categories of forecasting models:
+
+\paragraph{Classical Models}
+\begin{itemize}
+    \item \textbf{ARIMA (AutoRegressive Integrated Moving Average)}: A widely used model combining autoregression, differencing for stationarity, and moving average components to capture various time series patterns.
+    \item \textbf{SARIMA (Seasonal ARIMA)}: Extends ARIMA to explicitly handle seasonality by incorporating seasonal autoregressive and moving average terms.
+    \item \textbf{Holt-Winters}: An exponential smoothing method effective for forecasting data with trends and seasonality.
+    \item \textbf{Prophet}: Developed by Facebook, this model decomposes a time series into trend, seasonality, and holidays components, offering an intuitive interface and easy implementation.
+    \item \textbf{DLM (Dynamic Linear Model)}: A Bayesian forecasting method that captures time-varying relationships through probabilistic state-space modeling.
+\end{itemize}
+
+\paragraph{Deep Learning Models}
+\begin{itemize}
+    \item \textbf{RNN (Recurrent Neural Network)}: A neural network designed for sequential data, utilizing loops to retain temporal information.
+    \item \textbf{LSTM (Long Short-Term Memory)}: A specialized type of RNN designed to remember long-term dependencies, mitigating the vanishing gradient problem.
+    \item \textbf{GRU (Gated Recurrent Unit)}: A simpler variant of LSTM, it employs gates to control the flow of information, offering efficient training with fewer parameters.
+    \item \textbf{TCN (Temporal Convolutional Network)}: A convolution-based neural network that leverages causal convolutions and dilation, effectively capturing long-range temporal patterns.
+\end{itemize}
+
+\subsection{Datasets Used}
+\begin{itemize}
+    \item \textbf{AirPassengers}: Monthly international airline passenger numbers from 1949 to 1960. Characterized by a clear seasonal pattern and upward trend.
+    \item \textbf{Sunspots}: Monthly counts of sunspots from 1749 to present. Features periodic and nonlinear patterns useful for testing seasonal modeling capabilities.
+    \item \textbf{Electricity}: Hourly electricity consumption data from a region or building, highlighting patterns influenced by daily and weekly seasonality, weather conditions, and external events.
+    \item \textbf{COVID-19 Cases}: Daily confirmed COVID-19 case counts, reflecting non-stationary and irregular patterns, influenced by external policies and interventions.
+\end{itemize}
+
+\subsection{Evaluation Metrics}
+We utilize several metrics to comprehensively evaluate model performance:
+\begin{itemize}
+    \item \textbf{Mean Absolute Error (MAE)}: Average absolute error between predicted and actual values, providing an intuitive measure of forecasting accuracy.
+    \item \textbf{Root Mean Squared Error (RMSE)}: Square root of the average squared errors, sensitive to large prediction errors.
+    \item \textbf{Mean Absolute Percentage Error (MAPE)}: Average percentage error, facilitating comparability across scales.
+    \item \textbf{Training Time}: Computational time required to train each model, relevant for practical implementation.
+    \item \textbf{Symmetric Mean Absolute Percentage Error (sMAPE)}: Modified version of MAPE, providing balanced error measures particularly useful for intermittent or sparse data.
+    \item \textbf{Mean Squared Scaled Error (MSSE)}: Error scaled by the variance of the series, useful for comparing performance across multiple datasets.
+\end{itemize}
+
+\section{Results}
+
+\subsection{Performance Comparison}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{llcccc}
+    \toprule
+        Model & Dataset & MAE & RMSE & MAPE & Training Time (s)\\
+    \midrule
+        ARIMA & AirPassengers & 27.3 & 31.4 & 9.1\% & 0.4 \\
+        SARIMA & AirPassengers & 26.8 & 30.5 & 8.9\% & 0.6 \\
+        Prophet & AirPassengers & 27.0 & 30.7 & 9.0\% & 0.5 \\
+        LSTM & AirPassengers & 25.5 & 29.0 & 8.5\% & 15.2 \\
+        TCN & AirPassengers & 24.7 & 28.3 & 8.1\% & 18.4 \\
+    \bottomrule
+    \end{tabular}
+    \caption{Performance metrics on AirPassengers dataset (random data).}
+\end{table}
+
+\subsection{Robustness Analysis}
+Figure \ref{fig:predictions} compares actual vs. predicted values from various models on the AirPassengers dataset.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{example-plot.png}
+    \caption{Predicted vs. actual values (illustrative).}
+    \label{fig:predictions}
+\end{figure}
+
+\section{Recommendations}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{llp{6cm}}
+    \toprule
+        Scenario & Recommended Model & Reason \\
+    \midrule
+        Limited Data & Holt-Winters & Quick convergence, fewer parameters \\
+        High Seasonality & SARIMA/Prophet & Explicitly handle seasonal components effectively \\
+        Large Forecast Horizon & TCN/GRU & Better at capturing long-term dependencies \\
+        Simpler Implementation & Prophet & User-friendly, minimal tuning required \\
+    \bottomrule
+    \end{tabular}
+    \caption{Practical recommendations based on scenario analysis.}
+\end{table}
+
+\section{Conclusion}
+This study provides clear benchmarks and guidelines, demonstrating that while deep learning models often yield higher accuracy, traditional methods remain competitive in specific scenarios due to ease of use and computational efficiency.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
